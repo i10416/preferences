@@ -1,0 +1,10 @@
+.DS_Store
+.metals/
+.bloop/
+.node-version
+.idea/
+.project
+.class
+.log
+.vscode
+node_modules/
