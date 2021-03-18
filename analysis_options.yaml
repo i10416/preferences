@@ -1,10 +1,6 @@
 analyzer:
   exclude:
-    - "lib/api/generated/**/*.dart"
-    - "lib/helpers/constants/env.dart"
     - "bin/cache/**"
-    - "lib/i18n/messages_*.dart"
-    - "lib/src/http/**"
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
