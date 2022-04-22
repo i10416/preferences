@@ -24,6 +24,7 @@
     enable = true;
     dotDir = ".config/zsh";
     enableSyntaxHighlighting = true;
+    sessionVariables = { EDITOR = "vim"; };
     envExtra = ''
       if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
         . ~/.nix-profile/etc/profile.d/nix.sh
@@ -35,12 +36,52 @@
       theme = "robbyrussell";
     };
   };
-  programs.gh = { enable = true; };
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+    };
+
+  };
   programs.git = {
     enable = true;
-    ignores = [ "*~" "*.swp" ".DS_Store" ];
+    ignores = [
+      "*~" 
+      "*.swp" 
+      ".DS_Store" 
+    ];
     userName = "i10416";
     userEmail = "ito.yo16uh90616@gmail.com";
+    extraConfig = {
+      color = {
+        ui = "auto";
+      };
+      init = {
+        defaultBranch = "main";
+      };
+    };
   };
-  home.packages = [ pkgs.git pkgs.nixfmt pkgs.jdk11 pkgs.sbt pkgs.openssh ];
+  programs.vim = {
+    enable = true;
+    settings = {
+      ignorecase = true;
+      number = true;
+    };
+    extraConfig = ''
+      set autoindent
+      set smartindent
+      set tabstop=4
+    '';
+  };
+  home.packages = [
+    pkgs.git
+    pkgs.nixfmt
+    pkgs.jdk11
+    pkgs.sbt
+    pkgs.openssh
+    pkgs.ninja
+    pkgs.cmake
+    pkgs.jdk11
+    pkgs.jq
+  ];
 }
