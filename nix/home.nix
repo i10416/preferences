@@ -72,6 +72,7 @@
       set smartindent " even better indent
       set tabstop=4
       set wrap " wrap lines
+      set whichwrap=b,s,h,l,<,>,[,] 
       set encoding=utf8 
       set showmatch  " highlight matching parentheses/ brackets
       set visualbell " blink cursor on error, instead of beeping
