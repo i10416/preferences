@@ -68,20 +68,37 @@
       number = true;
     };
     extraConfig = ''
-      set autoindent
-      set smartindent
+      set autoindent  " better indent
+      set smartindent " even better indent
       set tabstop=4
+      set wrap " wrap lines
+      set encoding=utf8 
+      set showmatch  " highlight matching parentheses/ brackets
+      set visualbell " blink cursor on error, instead of beeping
+
     '';
   };
   home.packages = [
+    # base
+    pkgs.openssh
     pkgs.git
     pkgs.nixfmt
+    # scala
     pkgs.jdk11
     pkgs.sbt
-    pkgs.openssh
+    pkgs.coursier
+    pkgs.ammonite
+
+    # native
     pkgs.ninja
     pkgs.cmake
-    pkgs.jdk11
+    # infra
+    pkgs.terraform
+    pkgs.google-cloud-sdk
+    # misc
     pkgs.jq
+    pkgs.bat
+
   ];
+  news.display = "silent";
 }
