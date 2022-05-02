@@ -112,6 +112,11 @@
     # misc
     pkgs.jq
     pkgs.bat
+    # gnu compat for osx
+    pkgs.coreutils
+    pkgs.findutils
+    pkgs.gnugrep
+    pkgs.gnused
 
   ];
   news.display = "silent";
