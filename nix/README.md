@@ -57,3 +57,9 @@ nix build .#darwinConfigurations.j-one.system
 ```sh
 ./result/sw/bin/darwin-rebuild switch --flake .
 ```
+
+### on build failure
+
+```sh
+printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf  
+```
