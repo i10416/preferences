@@ -63,3 +63,7 @@ nix build .#darwinConfigurations.j-one.system
 ```sh
 printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf  
 ```
+
+```sh
+/System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
+```
