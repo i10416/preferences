@@ -3,8 +3,8 @@
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "i10416";
-  home.homeDirectory = "/Users/i10416";
+  home.username = "yoichiroito";
+  # home.homeDirectory = "/Users/yoichiroito";
   home.language.base = "en_US.UTF-8";
   fonts.fontconfig.enable = true;
 
@@ -110,6 +110,7 @@
     pkgs.terraform
     pkgs.google-cloud-sdk
     # misc
+    pkgs.imagemagick
     pkgs.jq
     pkgs.bat
     # gnu compat for osx
@@ -117,6 +118,9 @@
     pkgs.findutils
     pkgs.gnugrep
     pkgs.gnused
+    ## apps
+    pkgs.slack
+
 
   ];
   news.display = "silent";
