@@ -97,11 +97,17 @@
     pkgs.openssh
     pkgs.git
     pkgs.nixfmt
+
+    # haskell 
+    pkgs.stack
+    pkgs.pandoc
     # scala
     pkgs.jdk11
     pkgs.sbt
     pkgs.coursier
     pkgs.ammonite
+    # rust
+    pkgs.rustup
 
     # native
     pkgs.ninja
@@ -109,8 +115,11 @@
     # infra
     pkgs.terraform
     pkgs.google-cloud-sdk
+    # signing
+    pkgs.gnupg
     # misc
     pkgs.imagemagick
+    pkgs.tree
     pkgs.jq
     pkgs.bat
     # gnu compat for osx
@@ -120,8 +129,6 @@
     pkgs.gnused
     ## apps
     pkgs.slack
-
-
   ];
   news.display = "silent";
 }
