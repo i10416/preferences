@@ -51,7 +51,7 @@ sudo mv /etc/nix/nix.conf /etc/nix/.nix-darwin.bkp.nix.conf
 ## Build the configuration
 
 ```sh
-nix build .#darwinConfigurations.j-one.system
+nix build .#darwinConfigurations.<name>.system
 ```
 
 ```sh
