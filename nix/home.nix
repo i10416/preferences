@@ -3,7 +3,7 @@
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "yoichiroito";
+  # home.username = "yoichiroito";
   # home.homeDirectory = "/Users/yoichiroito";
   home.language.base = "en_US.UTF-8";
   fonts.fontconfig.enable = true;
@@ -38,27 +38,17 @@
   };
   programs.gh = {
     enable = true;
-    settings = {
-      git_protocol = "ssh";
-    };
+    settings = { git_protocol = "ssh"; };
 
   };
   programs.git = {
     enable = true;
-    ignores = [
-      "*~" 
-      "*.swp" 
-      ".DS_Store" 
-    ];
+    ignores = [ "*~" "*.swp" ".DS_Store" ];
     userName = "i10416";
     userEmail = "ito.yo16uh90616@gmail.com";
     extraConfig = {
-      color = {
-        ui = "auto";
-      };
-      init = {
-        defaultBranch = "main";
-      };
+      color = { ui = "auto"; };
+      init = { defaultBranch = "main"; };
     };
   };
   programs.vim = {
@@ -72,7 +62,10 @@
 
       set autoindent  " better indent
       set smartindent " even better indent
+      set expandtab " use spaces instead of tab
       set tabstop=4
+      set shiftwidth=4
+      set undofile " persist history
 
       set cursorline " highlight cursor line
       set list " show invisible chars
@@ -85,8 +78,8 @@
       set hlsearch " highlight search text
       set incsearch " search incrementally
       set wrapscan " back to first match item after the last one
-
-      set clipboard=unnamed,unnamedplus " sync clipboard with OS
+      set clipboard&
+      set clipboard=unnamed,unnamedplus " reset clipboard to default and sync clipboard with OS
 
       set visualbell " blink cursor on error, instead of beeping
 
@@ -97,11 +90,13 @@
     pkgs.openssh
     pkgs.git
     pkgs.nixfmt
+    pkgs.grpcurl
 
     # haskell 
     pkgs.stack
     pkgs.pandoc
     # scala
+    # pkgs.jdk17
     pkgs.jdk11
     pkgs.sbt
     pkgs.coursier
