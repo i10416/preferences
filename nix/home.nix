@@ -3,7 +3,7 @@
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  # home.username = "yoichiroito";
+  home.username = "yoichiroito";
   # home.homeDirectory = "/Users/yoichiroito";
   home.language.base = "en_US.UTF-8";
   fonts.fontconfig.enable = true;
@@ -29,6 +29,7 @@
       if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
         . ~/.nix-profile/etc/profile.d/nix.sh
       fi
+      export PATH=$PATH:/Users/yoichiroito/bin
     '';
     oh-my-zsh = {
       enable = true;
@@ -43,7 +44,19 @@
   };
   programs.git = {
     enable = true;
-    ignores = [ "*~" "*.swp" ".DS_Store" ];
+    ignores = [
+      # vim
+      "*~"
+      "*.swp"
+      # editor related
+      ".DS_Store"
+      ".vscode"
+      # scala
+      ".bsp"
+      ".metals"
+      "target"
+      "project/project"
+    ];
     userName = "i10416";
     userEmail = "ito.yo16uh90616@gmail.com";
     extraConfig = {
@@ -91,6 +104,7 @@
     pkgs.git
     pkgs.nixfmt
     pkgs.grpcurl
+    pkgs.protobuf
 
     # haskell 
     pkgs.stack
