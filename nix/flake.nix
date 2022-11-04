@@ -36,8 +36,10 @@
   in
   {
     # My `nix-darwin` configs
-      
+    
     darwinConfigurations = rec {
+      # this must match computer name
+      # you can find the computer name at System Preferences / Share.
       i10416s-MBP = darwinSystem {
         system = "aarch64-darwin";
         modules = attrValues self.darwinModules ++ [ 
