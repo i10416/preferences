@@ -48,9 +48,36 @@
      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
    ];
 
-  # Keyboard
-  system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToEscape = true;
+  system = {
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToEscape = true;
+    };
+    defaults = {
+      NSGlobalDomain = {
+        AppleShowScrollBars = "Always";
+        # show all files including hidden files
+        AppleShowAllFiles = true;
+        NSAutomaticWindowAnimationsEnabled = false;
+        NSUseAnimatedFocusRing = false;
+        # ダイアログの表示速度高速化
+        NSWindowResizeTime = 0.01;
+      };
+      dock = {
+        tilesize = 48;
+        expose-animation-duration = 0.0;
+        autohide = false;
+        launchanim = false;
+        orientation = "bottom";
+        autohide-delay = 0.0;
+      };
+    };
+  };
+  networking = {
+    dns = ["127.0.0.1" "8.8.8.8"];
+    search = ["local"];
+    knownNetworkServices = ["Ethernet" "Wi-Fi"];
+  };
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
