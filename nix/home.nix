@@ -91,6 +91,7 @@
       set hlsearch " highlight search text
       set incsearch " search incrementally
       set wrapscan " back to first match item after the last one
+      colorscheme lunaperche
       set clipboard&
       set clipboard=unnamed,unnamedplus " reset clipboard to default and sync clipboard with OS
 
@@ -138,6 +139,9 @@
     pkgs.gnused
     ## apps
     pkgs.slack
+    pkgs.vscode
+    pkgs.discord
+    pkgs.zoom-us
   ];
   news.display = "silent";
 }
