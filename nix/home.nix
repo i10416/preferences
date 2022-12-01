@@ -37,6 +37,25 @@
       theme = "robbyrussell";
     };
   };
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set -g mouse on
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+      bind-key -T copy-mode-vi v send-keys -X  begin-selection
+      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+      set -g mode-keys vi
+      set-option -g default-terminal screen-256color
+      set-window-option -g window-status-current-style bright
+      set-window-option -g window-status-style dim
+      set -s escape-time 0
+    '';
+  };
+
   programs.gh = {
     enable = true;
     settings = { git_protocol = "ssh"; };
