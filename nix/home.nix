@@ -20,22 +20,10 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  programs.zsh = {
+  programs.direnv = {
     enable = true;
-    dotDir = ".config/zsh";
-    enableSyntaxHighlighting = true;
-    sessionVariables = { EDITOR = "vim"; };
-    envExtra = ''
-      if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
-        . ~/.nix-profile/etc/profile.d/nix.sh
-      fi
-      export PATH=$PATH:/Users/yoichiroito/bin
-    '';
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" ];
-      theme = "robbyrussell";
-    };
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
   };
   programs.tmux = {
     enable = true;
@@ -55,7 +43,26 @@
       set -s escape-time 0
     '';
   };
-
+  programs.bat.enable = true;
+  programs.jq.enable = true;
+  programs.java.enable = true;
+  programs.zsh = {
+    enable = true;
+    dotDir = ".config/zsh";
+    syntaxHighlighting.enable = true;
+    sessionVariables = { EDITOR = "vim"; };
+    envExtra = ''
+      if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+        . ~/.nix-profile/etc/profile.d/nix.sh
+      fi
+      export PATH=$PATH:/$HOME/bin:$HOME/.ghcup/bin
+    '';
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" ];
+      theme = "robbyrussell";
+    };
+  };
   programs.gh = {
     enable = true;
     settings = { git_protocol = "ssh"; };
@@ -72,12 +79,15 @@
       ".vscode"
       # scala
       ".bsp"
+      ".log"
       ".metals"
       "target"
       "project/project"
+      ".scala-build"
     ];
     userName = "i10416";
     userEmail = "ito.yo16uh90616@gmail.com";
+    lfs.enable = true;
     extraConfig = {
       color = { ui = "auto"; };
       init = { defaultBranch = "main"; };
@@ -110,7 +120,6 @@
       set hlsearch " highlight search text
       set incsearch " search incrementally
       set wrapscan " back to first match item after the last one
-      colorscheme lunaperche
       set clipboard&
       set clipboard=unnamed,unnamedplus " reset clipboard to default and sync clipboard with OS
 
@@ -122,18 +131,22 @@
     # base
     pkgs.openssh
     pkgs.git
+    pkgs.git-lfs
     pkgs.nixfmt
+    pkgs.nil
     pkgs.grpcurl
     pkgs.protobuf
 
-    # haskell 
+    # haskell
     pkgs.stack
     pkgs.pandoc
     # scala
     # pkgs.jdk17
-    pkgs.jdk11
-    pkgs.sbt
-    pkgs.coursier
+    # scalajs
+    pkgs.nodejs_22
+    # pkgs.jdk11
+    (pkgs.sbt.override { jre = pkgs.jdk17; })
+    # pkgs.coursier
     pkgs.ammonite
     # rust
     pkgs.rustup
@@ -158,9 +171,9 @@
     pkgs.gnused
     ## apps
     pkgs.slack
-    pkgs.vscode
-    pkgs.discord
-    pkgs.zoom-us
+    # go
+    pkgs.go
+    pkgs.gopls
   ];
   news.display = "silent";
 }
