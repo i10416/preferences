@@ -77,6 +77,9 @@
       # editor related
       ".DS_Store"
       ".vscode"
+      # tools
+      ".envrc"
+      ".direnv"
       # scala
       ".bsp"
       ".log"
@@ -132,11 +135,12 @@
     pkgs.openssh
     pkgs.git
     pkgs.git-lfs
-    pkgs.nixfmt
+    pkgs.nixfmt-rfc-style
     pkgs.nil
     pkgs.grpcurl
     pkgs.protobuf
 
+    # tools
     # haskell
     pkgs.stack
     pkgs.pandoc
@@ -174,6 +178,8 @@
     # go
     pkgs.go
     pkgs.gopls
+    # ios
+    pkgs.xcodes
   ];
   news.display = "silent";
 }

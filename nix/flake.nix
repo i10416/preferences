@@ -12,29 +12,46 @@
 
     # Other sources
     nil.url = "github:oxalica/nil";
-
+    nil.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    { self, darwin, nixpkgs, home-manager, nil, ... }@inputs:
+    {
+      self,
+      darwin,
+      nixpkgs,
+      home-manager,
+      nil,
+      ...
+    }@inputs:
     let
 
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs.lib)
-        attrValues makeOverridable optionalAttrs singleton;
+        attrValues
+        makeOverridable
+        optionalAttrs
+        singleton
+        ;
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
-        config = { allowUnfree = true; };
-        overlays = attrValues self.overlays ++ singleton (
-          # Sub in x86 version of packages that don't build on Apple Silicon yet
-          final: prev:
-          (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-            inherit (final.pkgs-x86)
-            ;
-          }));
+        config = {
+          allowUnfree = true;
+        };
+        overlays =
+          attrValues self.overlays
+          ++ singleton (
+            # Sub in x86 version of packages that don't build on Apple Silicon yet
+            final: prev:
+            (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+              inherit (final.pkgs-x86)
+                ;
+            })
+          );
       };
-    in {
+    in
+    {
       # My `nix-darwin` configs
 
       darwinConfigurations = {
@@ -42,7 +59,7 @@
           system = "aarch64-darwin";
           modules = attrValues self.darwinModules ++ [
             # Main `nix-darwin` config
-            ./configuration.nix
+            ./nix-darwin/configuration.nix
             # `home-manager` module
             home-manager.darwinModules.home-manager
             {
@@ -64,7 +81,8 @@
         };
 
         # Overlay useful on Macs with Apple Silicon
-        apple-silicon = final: prev:
+        apple-silicon =
+          final: prev:
           optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
             # Add access to x86 packages system is running Apple Silicon
             pkgs-x86 = import inputs.nixpkgs {
@@ -80,7 +98,12 @@
 
         security-pam =
           # Upstream PR: https://github.com/LnL7/nix-darwin/pull/228
-          { config, lib, pkgs, ... }:
+          {
+            config,
+            lib,
+            pkgs,
+            ...
+          }:
 
           with lib;
 
@@ -97,36 +120,46 @@
             # As such, we resort to line addition/deletion in place using `sed`. We add a comment to the
             # added line that includes the name of the option, to make it easier to identify the line that
             # should be deleted when the option is disabled.
-            mkSudoTouchIdAuthScript = isEnabled:
+            mkSudoTouchIdAuthScript =
+              isEnabled:
               let
                 file = "/etc/pam.d/sudo";
                 option = "security.pam.enableSudoTouchIdAuth";
-              in ''
-                ${if isEnabled then ''
-                  # Enable sudo Touch ID authentication, if not already enabled
-                  if ! grep 'pam_tid.so' ${file} > /dev/null; then
-                    sed -i "" '2i\
-                  auth       sufficient     pam_tid.so # nix-darwin: ${option}
-                    ' ${file}
-                  fi
-                '' else ''
-                  # Disable sudo Touch ID authentication, if added by nix-darwin
-                  if grep '${option}' ${file} > /dev/null; then
-                    sed -i "" '/${option}/d' ${file}
-                  fi
-                ''}
+              in
+              ''
+                ${
+                  if isEnabled then
+                    ''
+                      # Enable sudo Touch ID authentication, if not already enabled
+                      if ! grep 'pam_tid.so' ${file} > /dev/null; then
+                        sed -i "" '2i\
+                      auth       sufficient     pam_tid.so # nix-darwin: ${option}
+                        ' ${file}
+                      fi
+                    ''
+                  else
+                    ''
+                      # Disable sudo Touch ID authentication, if added by nix-darwin
+                      if grep '${option}' ${file} > /dev/null; then
+                        sed -i "" '/${option}/d' ${file}
+                      fi
+                    ''
+                }
               '';
 
-          in {
+          in
+          {
             options = {
-              /*security.pam.enableSudoTouchIdAuth = mkEnableOption ''
-                Enable sudo authentication with Touch ID
-                When enabled, this option adds the following line to /etc/pam.d/sudo:
-                    auth       sufficient     pam_tid.so
-                (Note that macOS resets this file when doing a system update. As such, sudo
-                authentication with Touch ID won't work after a system update until the nix-darwin
-                configuration is reapplied.)
-              '';*/
+              /*
+                security.pam.enableSudoTouchIdAuth = mkEnableOption ''
+                  Enable sudo authentication with Touch ID
+                  When enabled, this option adds the following line to /etc/pam.d/sudo:
+                      auth       sufficient     pam_tid.so
+                  (Note that macOS resets this file when doing a system update. As such, sudo
+                  authentication with Touch ID won't work after a system update until the nix-darwin
+                  configuration is reapplied.)
+                '';
+              */
             };
 
             config = {
