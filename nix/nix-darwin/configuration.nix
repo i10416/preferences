@@ -4,6 +4,7 @@ let
   system = import ./system.nix;
   networking = import ./networking.nix;
   add-ons = import ./add-ons.nix { inherit pkgs; };
+  services = import ./services.nix;
 in
 {
   imports = [
@@ -11,6 +12,7 @@ in
     system
     networking
     add-ons
+    services
   ];
 
   # Nix configuration ------------------------------------------------------------------------------
@@ -21,9 +23,6 @@ in
   ids.gids.nixbld = 30000;
 
   users.users.yoichiroito.home = "/Users/yoichiroito";
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
