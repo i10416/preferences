@@ -124,7 +124,7 @@
               isEnabled:
               let
                 file = "/etc/pam.d/sudo";
-                option = "security.pam.enableSudoTouchIdAuth";
+                option = "security.pam.services.sudo_local.touchIdAuth";
               in
               ''
                 ${
@@ -163,11 +163,11 @@
             };
 
             config = {
-              system.activationScripts.extraActivation.text = ''
-                # PAM settings
-                echo >&2 "setting up pam..."
-                ${mkSudoTouchIdAuthScript cfg.enableSudoTouchIdAuth}
-              '';
+              # system.activationScripts.extraActivation.text = ''
+              #   # PAM settings
+              #   echo >&2 "setting up pam..."
+              #   ${mkSudoTouchIdAuthScript cfg.enableSudoTouchIdAuth}
+              # '';
             };
           };
       };
