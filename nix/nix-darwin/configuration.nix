@@ -4,7 +4,6 @@ let
   system = import ./system.nix;
   networking = import ./networking.nix;
   add-ons = import ./add-ons.nix { inherit pkgs; };
-  services = import ./services.nix;
 in
 {
   imports = [
@@ -12,7 +11,6 @@ in
     system
     networking
     add-ons
-    services
   ];
 
   # Nix configuration ------------------------------------------------------------------------------
@@ -24,7 +22,6 @@ in
 
   users.users.yoichiroito.home = "/Users/yoichiroito";
 
-  # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
 }
